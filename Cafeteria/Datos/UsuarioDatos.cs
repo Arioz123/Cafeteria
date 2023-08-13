@@ -139,7 +139,7 @@ namespace Cafeteria.Datos
             return respuesta;
         }
         //##############################################################################
-        public bool EliminarAlumno(AlumnoModel model)
+        public bool EliminarAlumno(int Nss)
         {   //creo una variable boolean
             bool respuesta;
             try
@@ -151,7 +151,7 @@ namespace Cafeteria.Datos
                     conexion.Open();
                     SqlCommand cmd = new SqlCommand("sp_EliminarAlumno", conexion);
                     //enviando un parametro al procedimiento almacenado
-                    cmd.Parameters.AddWithValue("Nss", model.Nss);
+                    cmd.Parameters.AddWithValue("Nss", Nss);
                     cmd.CommandType = CommandType.StoredProcedure;
                     //ejecutar el prrocedimiento almacenado
                     cmd.ExecuteNonQuery();
