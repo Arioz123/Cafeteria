@@ -79,7 +79,7 @@ namespace Cafeteria.Datos
                 using (var conexion = new SqlConnection(al.getCadenaSql()))
                 {
                     conexion.Open();
-                    SqlCommand cmd = new SqlCommand("sp_EditararAlumno", conexion);
+                    SqlCommand cmd = new SqlCommand("sp_RegistrarAlumno", conexion);
                     //enviando un parametro al procedimiento almacenado
                     cmd.Parameters.AddWithValue("Nss", model.Nss);
                     cmd.Parameters.AddWithValue("Nombre", model.Nombre);
