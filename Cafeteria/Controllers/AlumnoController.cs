@@ -11,16 +11,29 @@ namespace Cafeteria.Controllers
         {
             return View();
         }
-
-        public IActionResult RegistrarAlumno(AlumnoModel model) //Esta es la pagina para registrar al alumno (No hay para empleado, se sube directamente desde la base de datos)
+        [HttpGet]
+        public IActionResult ListarAlumno(AlumnoModel model) //Esta es la pagina para registrar al alumno (No hay para empleado, se sube directamente desde la base de datos)
         {
             var respuesta = _UsuarioDatos.ListarAlumno();
+            return View(respuesta);
+        }
+        [HttpPost]
+        public IActionResult Registrarse() //Esto es para el inicio de sesión (Esta obviamente es la pagina principal)
+        {
+            //Esta es para mostrar el formulario
             return View();
         }
-        [HttpGet]
-        public IActionResult Index1() //Esto es para el inicio de sesión (Esta obviamente es la pagina principal)
+        [HttpPost]
+        public IActionResult Registrarse(AlumnoModel model) //Esto es para el inicio de sesión (Esta obviamente es la pagina principal)
         {
-            return View();
+            var respuesta = _UsuarioDatos.RegistrarAlumno(model);
+            if(respuesta)
+            {
+                return RedirectToAction("Index");
+            } else
+            {
+                return View();
+            }
         }
     }
 }
