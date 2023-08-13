@@ -23,13 +23,17 @@ namespace Cafeteria.Controllers
             //Esta es para mostrar el formulario
             return View();
         }
-        [HttpPost]
+        [HttpGet]
         public IActionResult Registrarse(AlumnoModel model) //Esto es para el inicio de sesión (Esta obviamente es la pagina principal)
         {
-            var respuesta = _UsuarioDatos.RegistrarAlumno(model);
+            if(!ModelState.IsValid)
+            {
+                return View();
+            }
+            bool respuesta = _UsuarioDatos.RegistrarAlumno(model);
             if(respuesta)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("RegistrarAlumno");
             } else
             {
                 return View();
