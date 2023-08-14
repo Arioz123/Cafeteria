@@ -18,9 +18,9 @@
                     <th>Apellido</th>
                     <th>Correo</th>
                     <th>Carrera</th>
+                    <th>Semestre</th>
                     <th>Matricula</th>
                     <th>Contraseña</th>
-                    <th>Semestre</th>
                 </tr>
             </thead>
             <tbody>
@@ -32,9 +32,9 @@
                         <td>@Html.DisplayFor(modelItem=>item.Apellido)</td>
                         <td>@Html.DisplayFor(modelItem=>item.Correo)</td>
                         <td>@Html.DisplayFor(modelItem=>item.Carrera)</td>
+                        <td>@Html.DisplayFor(modelItem=>item.Semestre)</td>
                         <td>@Html.DisplayFor(modelItem=>item.Matricula)</td>
                         <td>@Html.DisplayFor(modelItem=>item.Contraseña)</td>
-                        <td>@Html.DisplayFor(modelItem=>item.Semestre)</td>
 
                         <td>
                             <a asp-action="EditarAlumno" asp-controller="Alumno" asp-route-Nss="@item.Nss" class="btn btn-warning btn-sm">Editar</a>

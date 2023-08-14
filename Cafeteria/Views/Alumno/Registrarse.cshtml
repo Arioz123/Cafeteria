@@ -35,6 +35,10 @@
         <span asp-validation-for="Carrera" class="text-danger"></span>
     </div>
     <div class="col-6">
+        <label class="form-label" >Semestre</label>
+        <input asp-for="Semestre" type="text" class="form-control" />
+    </div>
+    <div class="col-6">
         <label class="form-label">Matricula</label>
         <input asp-for="Matricula" type="number" class="form-control" > 
         <span asp-validation-for="Matricula" class="text-danger"></span>
@@ -44,12 +48,8 @@
         <input asp-for="Contraseña" type="password" class="form-control" />
         <span asp-validation-for="Contraseña" class="text-danger"></span>
     </div>
-    <div class="col-6">
-        <label class="form-label" >Semestre</label>
-        <input asp-for="Semestre" type="text" class="form-control" />
-    </div>
     <div class="col-4">
-                <button asp-controller="Alumno" asp-action="ListarAlumno" type="submit" class="btn btn-primary">Registrarse</button>
+                <button type="submit" class="btn btn-primary">Registrarse</button>
                 <a asp-action="ListarAlumno" asp-controller="Alumno">Volver a la lista</a>
     </div>
 </form>
