@@ -39,5 +39,53 @@ namespace Cafeteria.Controllers
                 return View();
             }
         }
+        [HttpGet]
+        public IActionResult EditarAlumno(int Nss)
+        {
+            //Para obtener y mostrar el contacto a modificar
+            AlumnoModel _Alumno = _UsuarioDatos.BuscarAlumno(Nss);
+
+            return View(_Alumno);
+        }
+        [HttpPost]
+        public IActionResult EditarAlumno(AlumnoModel model) 
+        { 
+            //para obtener los datos que se editaron del formulario y enviarlo en la base de datos
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            var respuesta = _UsuarioDatos.EditarAlumno(model);
+            if (respuesta) 
+            {
+                return RedirectToAction("ListarAlumno");
+            }
+            else
+            {
+                return View();
+            }
+        }
+        [HttpGet]
+        public IActionResult EliminarAlumno(int Nss)
+        {
+            //Para obtener y mostrar el contacto a eliminar
+            AlumnoModel _Alumno = _UsuarioDatos.BuscarAlumno(Nss);
+
+            return View(_Alumno);
+        }
+        [HttpPost]
+        public IActionResult EliminarAlumno(AlumnoModel model)
+        {
+            //para obtener los datos que se van a eliminar del formulario y enviarlo en la base de datos
+            var respuesta = _UsuarioDatos.EliminarAlumno(model.Nss);
+            if (respuesta)
+            {
+                return RedirectToAction("ListarAlumno");
+            }
+            else
+            {
+                return View();
+            }
+        }
     }
 }
