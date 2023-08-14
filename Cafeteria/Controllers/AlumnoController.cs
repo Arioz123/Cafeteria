@@ -17,13 +17,13 @@ namespace Cafeteria.Controllers
             var respuesta = _UsuarioDatos.ListarAlumno();
             return View(respuesta);
         }
-        [HttpPost]
+        [HttpGet]
         public IActionResult Registrarse() //Esto es para el inicio de sesión (Esta obviamente es la pagina principal)
         {
             //Esta es para mostrar el formulario
             return View();
         }
-        [HttpGet]
+        [HttpPost]
         public IActionResult Registrarse(AlumnoModel model) //Esto es para el inicio de sesión (Esta obviamente es la pagina principal)
         {
             if(!ModelState.IsValid)
@@ -33,7 +33,7 @@ namespace Cafeteria.Controllers
             bool respuesta = _UsuarioDatos.RegistrarAlumno(model);
             if(respuesta)
             {
-                return RedirectToAction("RegistrarAlumno");
+                return RedirectToAction("ListarAlumno");
             } else
             {
                 return View();
