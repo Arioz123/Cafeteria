@@ -70,7 +70,7 @@ namespace Cafeteria.Controllers
         public IActionResult EliminarProducto(int id)
         {
             //Para obtener y mostrar el contacto a eliminar
-            AlumnoModel _Alumno = _productoDatos.BuscarProducto(id);
+            ProductosModel _Producto = _productoDatos.BuscarProducto(id);
 
             return View(_Producto);
         }
