@@ -1,4 +1,6 @@
-﻿namespace Cafeteria.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Cafeteria.Models
 {
     public class EmpleadoModel
     {
