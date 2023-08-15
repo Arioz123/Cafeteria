@@ -51,10 +51,10 @@ namespace Cafeteria.Datos
                     while (dr.Read())
                     {
 
-                            oAlumno.Id = Convert.ToInt32(dr["Id"]),
-                            oAlumno.Nombre = dr["Nombre"].ToString(),
-                            oAlumno.Cantidad = Convert.ToInt32(dr["Cantidad"]),
-                            oAlumno.Precio = Convert.ToDecimal(dr["Salario"]),
+                        oAlumno.Id = Convert.ToInt32(dr["Id"]);
+                        oAlumno.Nombre = dr["Nombre"].ToString();
+                        oAlumno.Cantidad = Convert.ToInt32(dr["Cantidad"]);
+                        oAlumno.Precio = Convert.ToDecimal(dr["Salario"]);
                     }
                 }
             }
