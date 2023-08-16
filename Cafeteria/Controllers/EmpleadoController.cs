@@ -61,7 +61,7 @@ namespace Cafeteria.Controllers
             var respuesta = _EmpleadoDatos.EditarEmpleado(model);
             if (respuesta)
             {
-                return RedirectToAction("ListarAlumno");
+                return RedirectToAction("ListarEmpleado");
             }
             else
             {
