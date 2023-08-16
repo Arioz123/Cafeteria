@@ -4,17 +4,17 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Cafeteria.Controllers
 {
-    public class AlumnoController : Controller
+    public class ProductoController : Controller
     {
-        UsuarioDatos _UsuarioDatos = new UsuarioDatos();
-        public IActionResult Index() //Esto es para el inicio de sesión (Esta obviamente es la pagina principal)
+        ProductoDatos _productoDatos = new ProductoDatos();
+        public IActionResult Index() 
         {
             return View();
         }
         [HttpGet]
-        public IActionResult ListarAlumno(AlumnoModel model) //Esta es la pagina para registrar al alumno (No hay para empleado, se sube directamente desde la base de datos)
+        public IActionResult ListarProducto(ProductosModel model) //Esta es la pagina para registrar al alumno (No hay para empleado, se sube directamente desde la base de datos)
         {
-            var respuesta = _UsuarioDatos.ListarAlumno();
+            var respuesta = _productoDatos.ListarProducto();
             return View(respuesta);
         }
         [HttpGet]
@@ -24,41 +24,16 @@ namespace Cafeteria.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Registrarse(AlumnoModel model) //Esto es para el inicio de sesión (Esta obviamente es la pagina principal)
+        public IActionResult Registrarse(ProductosModel model) //Esto es para el inicio de sesión (Esta obviamente es la pagina principal)
         {
-            if(!ModelState.IsValid)
-            {
-                return View();
-            }
-            bool respuesta = _UsuarioDatos.RegistrarAlumno(model);
-            if(respuesta)
-            {
-                return RedirectToAction("ListarAlumno");
-            } else
-            {
-                return View();
-            }
-        }
-        [HttpGet]
-        public IActionResult EditarAlumno(int Nss)
-        {
-            //Para obtener y mostrar el contacto a modificar
-            AlumnoModel _Alumno = _UsuarioDatos.BuscarAlumno(Nss);
-
-            return View(_Alumno);
-        }
-        [HttpPost]
-        public IActionResult EditarAlumno(AlumnoModel model) 
-        { 
-            //para obtener los datos que se editaron del formulario y enviarlo en la base de datos
             if (!ModelState.IsValid)
             {
                 return View();
             }
-            var respuesta = _UsuarioDatos.EditarAlumno(model);
-            if (respuesta) 
+            bool respuesta = _productoDatos.RegistrarProducto(model);
+            if (respuesta)
             {
-                return RedirectToAction("ListarAlumno");
+                return RedirectToAction("ListarProducto");
             }
             else
             {
@@ -66,18 +41,44 @@ namespace Cafeteria.Controllers
             }
         }
         [HttpGet]
-        public IActionResult EliminarAlumno(int Nss)
+        public IActionResult EditarProducto(int id)
         {
-            //Para obtener y mostrar el contacto a eliminar
-            AlumnoModel _Alumno = _UsuarioDatos.BuscarAlumno(Nss);
+            //Para obtener y mostrar el contacto a modificar
+            ProductosModel _Producto= _productoDatos.BuscarProducto(id);
 
-            return View(_Alumno);
+            return View(_Producto);
         }
         [HttpPost]
-        public IActionResult EliminarAlumno(AlumnoModel model)
+        public IActionResult EditarProducto(ProductosModel model)
+        {
+            //para obtener los datos que se editaron del formulario y enviarlo en la base de datos
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            var respuesta = _productoDatos.EditarProducto(model);
+            if (respuesta)
+            {
+                return RedirectToAction("ListarProducto");
+            }
+            else
+            {
+                return View();
+            }
+        }
+        [HttpGet]
+        public IActionResult EliminarProducto(int id)
+        {
+            //Para obtener y mostrar el contacto a eliminar
+            ProductosModel _Producto = _productoDatos.BuscarProducto(id);
+
+            return View(_Producto);
+        }
+        [HttpPost]
+        public IActionResult EliminarProducto(ProductosModel model)
         {
             //para obtener los datos que se van a eliminar del formulario y enviarlo en la base de datos
-            var respuesta = _UsuarioDatos.EliminarAlumno(model.Nss);
+            var respuesta = _productoDatos.EliminarProducto(model.Id);
             if (respuesta)
             {
                 return RedirectToAction("ListarAlumno");
@@ -89,3 +90,4 @@ namespace Cafeteria.Controllers
         }
     }
 }
+
