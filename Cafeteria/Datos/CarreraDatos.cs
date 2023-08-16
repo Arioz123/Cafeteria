@@ -1,34 +1,28 @@
 ﻿using Cafeteria.Models;
 using System.Data.SqlClient;
 using System.Data;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.Linq.Expressions;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Cafeteria.Datos
 {
-    public class InventarioDatos
+    public class CarreraDatos
     {
-        public List<InventarioModel> ListarInventario()
+        public List<CarreraModel> ListarCarrera()
         {
-            var oLista = new List<InventarioModel>();
+            var oLista = new List<CarreraModel>();
             var al = new Conexion();
             using (var conexion = new SqlConnection(al.getCadenaSql()))
             {
                 conexion.Open();
-                SqlCommand cmd = new SqlCommand("sp_ListarInventario", conexion);
+                SqlCommand cmd = new SqlCommand("sp_ListarCarrera", conexion);
                 cmd.CommandType = CommandType.StoredProcedure;
                 using (var dr = cmd.ExecuteReader())
                 {
                     while (dr.Read())
                     {
-                        oLista.Add(new InventarioModel()
+                        oLista.Add(new CarreraModel()
                         {
-                            Id = Convert.ToInt32(dr["Id"]),
+                            Codigo = Convert.ToInt32(dr["Codigo"]),
                             Nombre = dr["Nombre"].ToString(),
-                            Cantidad = Convert.ToInt32(dr["Cantidad"]),
-                            Precio = Convert.ToDecimal(dr["Precio"]),
                         });
                     }
                 }
@@ -36,32 +30,30 @@ namespace Cafeteria.Datos
             return oLista;
         }
         //##############################################################################
-        public InventarioModel BuscarInventario(int Id)
+        public CarreraModel BuscarCarrera(int Codigo)
         {
-            var oAlumno = new InventarioModel();
+            var oAlumno = new CarreraModel();
             var al = new Conexion();
             using (var conexion = new SqlConnection(al.getCadenaSql()))
             {
                 conexion.Open();
-                SqlCommand cmd = new SqlCommand("sp_BuscarInventario", conexion);
-                cmd.Parameters.AddWithValue("Id", Id);
+                SqlCommand cmd = new SqlCommand("sp_ObtenerCarrera", conexion);
+                cmd.Parameters.AddWithValue("Codigo", Codigo);
                 cmd.CommandType = CommandType.StoredProcedure;
                 using (var dr = cmd.ExecuteReader())
                 {
                     while (dr.Read())
                     {
 
-                        oAlumno.Id = Convert.ToInt32(dr["Id"]);
+                        oAlumno.Codigo = Convert.ToInt32(dr["Id"]);
                         oAlumno.Nombre = dr["Nombre"].ToString();
-                        oAlumno.Cantidad = Convert.ToInt32(dr["Cantidad"]);
-                        oAlumno.Precio = Convert.ToDecimal(dr["Precio"]);
                     }
                 }
             }
             return oAlumno;
         }
         //##############################################################################
-        public bool RegistrarInventario(InventarioModel model)
+        public bool RegistrarCarrera(CarreraModel model)
         {   //creo una variable boolean
             bool respuesta;
             try
@@ -71,12 +63,10 @@ namespace Cafeteria.Datos
                 using (var conexion = new SqlConnection(al.getCadenaSql()))
                 {
                     conexion.Open();
-                    SqlCommand cmd = new SqlCommand("sp_RegistrarInventario", conexion);
+                    SqlCommand cmd = new SqlCommand("sp_RegistrarCarrera", conexion);
                     //enviando un parametro al procedimiento almacenado
-                    cmd.Parameters.AddWithValue("Id", model.Id);
+                    cmd.Parameters.AddWithValue("Codigo", model.Codigo);
                     cmd.Parameters.AddWithValue("Nombre", model.Nombre);
-                    cmd.Parameters.AddWithValue("Cantidad", model.Cantidad);
-                    cmd.Parameters.AddWithValue("Precio", model.Precio);
                     cmd.CommandType = CommandType.StoredProcedure;
                     //ejecutar el prrocedimiento almacenado
                     cmd.ExecuteNonQuery();
@@ -92,7 +82,7 @@ namespace Cafeteria.Datos
             return respuesta;
         }
         //##############################################################################
-        public bool EditarInventario(InventarioModel model)
+        public bool EditarCarrera(CarreraModel model)
         {   //creo una variable boolean
             bool respuesta;
             try
@@ -102,12 +92,10 @@ namespace Cafeteria.Datos
                 using (var conexion = new SqlConnection(al.getCadenaSql()))
                 {
                     conexion.Open();
-                    SqlCommand cmd = new SqlCommand("sp_EditarInventario", conexion);
+                    SqlCommand cmd = new SqlCommand("sp_EditarCarrera", conexion);
                     //enviando un parametro al procedimiento almacenado
-                    cmd.Parameters.AddWithValue("Id", model.Id);
+                    cmd.Parameters.AddWithValue("Codigo", model.Codigo);
                     cmd.Parameters.AddWithValue("Nombre", model.Nombre);
-                    cmd.Parameters.AddWithValue("Cantidad", model.Cantidad);
-                    cmd.Parameters.AddWithValue("Precio", model.Precio);
                     cmd.CommandType = CommandType.StoredProcedure;
                     //ejecutar el prrocedimiento almacenado
                     cmd.ExecuteNonQuery();
@@ -123,7 +111,7 @@ namespace Cafeteria.Datos
             return respuesta;
         }
         //##############################################################################
-        public bool EliminarInventario(int Id)
+        public bool EliminarCarrera(int Codigo)
         {   //creo una variable boolean
             bool respuesta;
             try
@@ -133,9 +121,9 @@ namespace Cafeteria.Datos
                 using (var conexion = new SqlConnection(al.getCadenaSql()))
                 {
                     conexion.Open();
-                    SqlCommand cmd = new SqlCommand("sp_EliminarInventario", conexion);
+                    SqlCommand cmd = new SqlCommand("sp_EliminarCarrera", conexion);
                     //enviando un parametro al procedimiento almacenado
-                    cmd.Parameters.AddWithValue("Id", Id);
+                    cmd.Parameters.AddWithValue("Codigo", Codigo);
                     cmd.CommandType = CommandType.StoredProcedure;
                     //ejecutar el prrocedimiento almacenado
                     cmd.ExecuteNonQuery();
