@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Cafeteria.Controllers
 {
-    public class ProductoController : Controller
+    public class ProductosController : Controller
     {
-        ProductoDatos _productoDatos = new ProductoDatos();
+        ProductosDatos _productoDatos = new ProductosDatos();
         public IActionResult Index() 
         {
             return View();
@@ -18,13 +18,13 @@ namespace Cafeteria.Controllers
             return View(respuesta);
         }
         [HttpGet]
-        public IActionResult Registrarse() //Esto es para el inicio de sesión (Esta obviamente es la pagina principal)
+        public IActionResult RegistrarProducto() //Esto es para el inicio de sesión (Esta obviamente es la pagina principal)
         {
             //Esta es para mostrar el formulario
             return View();
         }
         [HttpPost]
-        public IActionResult Registrarse(ProductosModel model) //Esto es para el inicio de sesión (Esta obviamente es la pagina principal)
+        public IActionResult RegistrarProducto(ProductosModel model) //Esto es para el inicio de sesión (Esta obviamente es la pagina principal)
         {
             if (!ModelState.IsValid)
             {
@@ -81,7 +81,7 @@ namespace Cafeteria.Controllers
             var respuesta = _productoDatos.EliminarProducto(model.Id);
             if (respuesta)
             {
-                return RedirectToAction("ListarAlumno");
+                return RedirectToAction("ListarProducto");
             }
             else
             {

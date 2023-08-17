@@ -4,7 +4,7 @@ using System.Data;
 
 namespace Cafeteria.Datos
 {
-    public class ProductoDatos
+    public class ProductosDatos
     {
             public List<ProductosModel> ListarProducto()
             {
@@ -50,8 +50,8 @@ namespace Cafeteria.Datos
 
                         oProducto.Id = Convert.ToInt32(dr["Id"]);
                         oProducto.Nombre = dr["Nombre"].ToString();
-                        oProducto.Descripcion = dr["Apellido"].ToString();
-                        oProducto.Precio = Convert.ToDecimal(dr["Correo"]);
+                        oProducto.Descripcion = dr["Descripcion"].ToString();
+                        oProducto.Precio = Convert.ToDecimal(dr["Precio"]);
                         
                     }
                 }
