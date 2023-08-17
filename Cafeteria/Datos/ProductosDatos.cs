@@ -1,49 +1,46 @@
 ﻿using Cafeteria.Models;
 using System.Data.SqlClient;
 using System.Data;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.Linq.Expressions;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Cafeteria.Datos
 {
-    public class InventarioDatos
+    public class ProductosDatos
     {
-        public List<InventarioModel> ListarInventario()
-        {
-            var oLista = new List<InventarioModel>();
-            var al = new Conexion();
-            using (var conexion = new SqlConnection(al.getCadenaSql()))
+            public List<ProductosModel> ListarProducto()
             {
-                conexion.Open();
-                SqlCommand cmd = new SqlCommand("sp_ListarInventario", conexion);
-                cmd.CommandType = CommandType.StoredProcedure;
-                using (var dr = cmd.ExecuteReader())
+                var oLista = new List<ProductosModel>();
+                var al = new Conexion();
+                using (var conexion = new SqlConnection(al.getCadenaSql()))
                 {
-                    while (dr.Read())
+                    conexion.Open();
+                    SqlCommand cmd = new SqlCommand("sp_ListarProducto", conexion);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    using (var dr = cmd.ExecuteReader())
                     {
-                        oLista.Add(new InventarioModel()
+                        while (dr.Read())
                         {
-                            Id = Convert.ToInt32(dr["Id"]),
-                            Nombre = dr["Nombre"].ToString(),
-                            Cantidad = Convert.ToInt32(dr["Cantidad"]),
-                            Precio = Convert.ToDecimal(dr["Precio"]),
-                        });
+                            oLista.Add(new ProductosModel()
+                            {
+                                Id = Convert.ToInt32(dr["Id"]),
+                                Nombre = dr["Nombre"].ToString(),
+                                Descripcion = dr["Descripcion"].ToString(),
+                                Precio = Convert.ToDecimal(dr["Precio"])
+                               
+                            });
+                        }
                     }
                 }
+                return oLista;
             }
-            return oLista;
-        }
-        //##############################################################################
-        public InventarioModel BuscarInventario(int Id)
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public ProductosModel BuscarProducto(int Id)
         {
-            var oAlumno = new InventarioModel();
+            var oProducto = new ProductosModel();
             var al = new Conexion();
             using (var conexion = new SqlConnection(al.getCadenaSql()))
             {
                 conexion.Open();
-                SqlCommand cmd = new SqlCommand("sp_BuscarInventario", conexion);
+                SqlCommand cmd = new SqlCommand("sp_BuscarProducto", conexion);
                 cmd.Parameters.AddWithValue("Id", Id);
                 cmd.CommandType = CommandType.StoredProcedure;
                 using (var dr = cmd.ExecuteReader())
@@ -51,17 +48,18 @@ namespace Cafeteria.Datos
                     while (dr.Read())
                     {
 
-                        oAlumno.Id = Convert.ToInt32(dr["Id"]);
-                        oAlumno.Nombre = dr["Nombre"].ToString();
-                        oAlumno.Cantidad = Convert.ToInt32(dr["Cantidad"]);
-                        oAlumno.Precio = Convert.ToDecimal(dr["Precio"]);
+                        oProducto.Id = Convert.ToInt32(dr["Id"]);
+                        oProducto.Nombre = dr["Nombre"].ToString();
+                        oProducto.Descripcion = dr["Descripcion"].ToString();
+                        oProducto.Precio = Convert.ToDecimal(dr["Precio"]);
+                        
                     }
                 }
             }
-            return oAlumno;
+            return oProducto;
         }
-        //##############################################################################
-        public bool RegistrarInventario(InventarioModel model)
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public bool RegistrarProducto(ProductosModel model)
         {   //creo una variable boolean
             bool respuesta;
             try
@@ -71,11 +69,11 @@ namespace Cafeteria.Datos
                 using (var conexion = new SqlConnection(al.getCadenaSql()))
                 {
                     conexion.Open();
-                    SqlCommand cmd = new SqlCommand("sp_RegistrarInventario", conexion);
+                    SqlCommand cmd = new SqlCommand("sp_RegistrarProducto", conexion);
                     //enviando un parametro al procedimiento almacenado
                     cmd.Parameters.AddWithValue("Id", model.Id);
                     cmd.Parameters.AddWithValue("Nombre", model.Nombre);
-                    cmd.Parameters.AddWithValue("Cantidad", model.Cantidad);
+                    cmd.Parameters.AddWithValue("Descripcion", model.Descripcion);
                     cmd.Parameters.AddWithValue("Precio", model.Precio);
                     cmd.CommandType = CommandType.StoredProcedure;
                     //ejecutar el prrocedimiento almacenado
@@ -91,8 +89,8 @@ namespace Cafeteria.Datos
             }
             return respuesta;
         }
-        //##############################################################################
-        public bool EditarInventario(InventarioModel model)
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public bool EditarProducto(ProductosModel model)
         {   //creo una variable boolean
             bool respuesta;
             try
@@ -102,11 +100,11 @@ namespace Cafeteria.Datos
                 using (var conexion = new SqlConnection(al.getCadenaSql()))
                 {
                     conexion.Open();
-                    SqlCommand cmd = new SqlCommand("sp_EditarInventario", conexion);
+                    SqlCommand cmd = new SqlCommand("sp_EditarProducto", conexion);
                     //enviando un parametro al procedimiento almacenado
                     cmd.Parameters.AddWithValue("Id", model.Id);
                     cmd.Parameters.AddWithValue("Nombre", model.Nombre);
-                    cmd.Parameters.AddWithValue("Cantidad", model.Cantidad);
+                    cmd.Parameters.AddWithValue("Descripcion", model.Descripcion);
                     cmd.Parameters.AddWithValue("Precio", model.Precio);
                     cmd.CommandType = CommandType.StoredProcedure;
                     //ejecutar el prrocedimiento almacenado
@@ -122,8 +120,8 @@ namespace Cafeteria.Datos
             }
             return respuesta;
         }
-        //##############################################################################
-        public bool EliminarInventario(int Id)
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        public bool EliminarProducto(int Id)
         {   //creo una variable boolean
             bool respuesta;
             try
@@ -133,7 +131,7 @@ namespace Cafeteria.Datos
                 using (var conexion = new SqlConnection(al.getCadenaSql()))
                 {
                     conexion.Open();
-                    SqlCommand cmd = new SqlCommand("sp_EliminarInventario", conexion);
+                    SqlCommand cmd = new SqlCommand("sp_EliminarProducto", conexion);
                     //enviando un parametro al procedimiento almacenado
                     cmd.Parameters.AddWithValue("Id", Id);
                     cmd.CommandType = CommandType.StoredProcedure;
@@ -150,6 +148,6 @@ namespace Cafeteria.Datos
             }
             return respuesta;
         }
-        //##############################################################################
+        //////
     }
 }

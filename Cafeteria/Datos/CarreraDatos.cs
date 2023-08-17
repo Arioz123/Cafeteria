@@ -4,62 +4,56 @@ using System.Data;
 
 namespace Cafeteria.Datos
 {
-    public class ProductoDatos
+    public class CarreraDatos
     {
-            public List<ProductosModel> ListarProducto()
-            {
-                var oLista = new List<ProductosModel>();
-                var al = new Conexion();
-                using (var conexion = new SqlConnection(al.getCadenaSql()))
-                {
-                    conexion.Open();
-                    SqlCommand cmd = new SqlCommand("sp_ListarProducto", conexion);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    using (var dr = cmd.ExecuteReader())
-                    {
-                        while (dr.Read())
-                        {
-                            oLista.Add(new ProductosModel()
-                            {
-                                Id = Convert.ToInt32(dr["Id"]),
-                                Nombre = dr["Nombre"].ToString(),
-                                Descripcion = dr["Descripcion"].ToString(),
-                                Precio = Convert.ToDecimal(dr["Precio"])
-                               
-                            });
-                        }
-                    }
-                }
-                return oLista;
-            }
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public ProductosModel BuscarProducto(int Id)
+        public List<CarreraModel> ListarCarrera()
         {
-            var oProducto = new ProductosModel();
+            var oLista = new List<CarreraModel>();
             var al = new Conexion();
             using (var conexion = new SqlConnection(al.getCadenaSql()))
             {
                 conexion.Open();
-                SqlCommand cmd = new SqlCommand("sp_BuscarProducto", conexion);
-                cmd.Parameters.AddWithValue("Id", Id);
+                SqlCommand cmd = new SqlCommand("sp_ListarCarrera", conexion);
+                cmd.CommandType = CommandType.StoredProcedure;
+                using (var dr = cmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        oLista.Add(new CarreraModel()
+                        {
+                            Codigo = Convert.ToInt32(dr["Codigo"]),
+                            Nombre = dr["Nombre"].ToString(),
+                        });
+                    }
+                }
+            }
+            return oLista;
+        }
+        //##############################################################################
+        public CarreraModel BuscarCarrera(int Codigo)
+        {
+            var oAlumno = new CarreraModel();
+            var al = new Conexion();
+            using (var conexion = new SqlConnection(al.getCadenaSql()))
+            {
+                conexion.Open();
+                SqlCommand cmd = new SqlCommand("sp_ObtenerCarrera", conexion);
+                cmd.Parameters.AddWithValue("Codigo", Codigo);
                 cmd.CommandType = CommandType.StoredProcedure;
                 using (var dr = cmd.ExecuteReader())
                 {
                     while (dr.Read())
                     {
 
-                        oProducto.Id = Convert.ToInt32(dr["Id"]);
-                        oProducto.Nombre = dr["Nombre"].ToString();
-                        oProducto.Descripcion = dr["Apellido"].ToString();
-                        oProducto.Precio = Convert.ToDecimal(dr["Correo"]);
-                        
+                        oAlumno.Codigo = Convert.ToInt32(dr["Id"]);
+                        oAlumno.Nombre = dr["Nombre"].ToString();
                     }
                 }
             }
-            return oProducto;
+            return oAlumno;
         }
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public bool RegistrarProducto(ProductosModel model)
+        //##############################################################################
+        public bool RegistrarCarrera(CarreraModel model)
         {   //creo una variable boolean
             bool respuesta;
             try
@@ -69,12 +63,10 @@ namespace Cafeteria.Datos
                 using (var conexion = new SqlConnection(al.getCadenaSql()))
                 {
                     conexion.Open();
-                    SqlCommand cmd = new SqlCommand("sp_RegistrarProducto", conexion);
+                    SqlCommand cmd = new SqlCommand("sp_RegistrarCarrera", conexion);
                     //enviando un parametro al procedimiento almacenado
-                    cmd.Parameters.AddWithValue("Id", model.Id);
+                    cmd.Parameters.AddWithValue("Codigo", model.Codigo);
                     cmd.Parameters.AddWithValue("Nombre", model.Nombre);
-                    cmd.Parameters.AddWithValue("Descripcion", model.Descripcion);
-                    cmd.Parameters.AddWithValue("Precio", model.Precio);
                     cmd.CommandType = CommandType.StoredProcedure;
                     //ejecutar el prrocedimiento almacenado
                     cmd.ExecuteNonQuery();
@@ -89,8 +81,8 @@ namespace Cafeteria.Datos
             }
             return respuesta;
         }
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public bool EditarProducto(ProductosModel model)
+        //##############################################################################
+        public bool EditarCarrera(CarreraModel model)
         {   //creo una variable boolean
             bool respuesta;
             try
@@ -100,12 +92,10 @@ namespace Cafeteria.Datos
                 using (var conexion = new SqlConnection(al.getCadenaSql()))
                 {
                     conexion.Open();
-                    SqlCommand cmd = new SqlCommand("sp_EditarProducto", conexion);
+                    SqlCommand cmd = new SqlCommand("sp_EditarCarrera", conexion);
                     //enviando un parametro al procedimiento almacenado
-                    cmd.Parameters.AddWithValue("Id", model.Id);
+                    cmd.Parameters.AddWithValue("Codigo", model.Codigo);
                     cmd.Parameters.AddWithValue("Nombre", model.Nombre);
-                    cmd.Parameters.AddWithValue("Descripcion", model.Descripcion);
-                    cmd.Parameters.AddWithValue("Precio", model.Precio);
                     cmd.CommandType = CommandType.StoredProcedure;
                     //ejecutar el prrocedimiento almacenado
                     cmd.ExecuteNonQuery();
@@ -120,8 +110,8 @@ namespace Cafeteria.Datos
             }
             return respuesta;
         }
-        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        public bool EliminarProducto(int Id)
+        //##############################################################################
+        public bool EliminarCarrera(int Codigo)
         {   //creo una variable boolean
             bool respuesta;
             try
@@ -131,9 +121,9 @@ namespace Cafeteria.Datos
                 using (var conexion = new SqlConnection(al.getCadenaSql()))
                 {
                     conexion.Open();
-                    SqlCommand cmd = new SqlCommand("sp_EliminarProducto", conexion);
+                    SqlCommand cmd = new SqlCommand("sp_EliminarCarrera", conexion);
                     //enviando un parametro al procedimiento almacenado
-                    cmd.Parameters.AddWithValue("Id", Id);
+                    cmd.Parameters.AddWithValue("Codigo", Codigo);
                     cmd.CommandType = CommandType.StoredProcedure;
                     //ejecutar el prrocedimiento almacenado
                     cmd.ExecuteNonQuery();
@@ -148,6 +138,6 @@ namespace Cafeteria.Datos
             }
             return respuesta;
         }
-        //////
+        //##############################################################################
     }
 }

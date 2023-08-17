@@ -7,6 +7,7 @@ namespace Cafeteria.Controllers
     public class AlumnoController : Controller
     {
         UsuarioDatos _UsuarioDatos = new UsuarioDatos();
+        CarreraDatos _CarreraDatos = new CarreraDatos();
         public IActionResult Index() //Esto es para el inicio de sesión (Esta obviamente es la pagina principal)
         {
             return View();
@@ -20,6 +21,7 @@ namespace Cafeteria.Controllers
         [HttpGet]
         public IActionResult Registrarse() //Esto es para el inicio de sesión (Esta obviamente es la pagina principal)
         {
+            ViewBag.Carreras = _CarreraDatos.ListarCarrera();
             //Esta es para mostrar el formulario
             return View();
         }
@@ -28,6 +30,7 @@ namespace Cafeteria.Controllers
         {
             if(!ModelState.IsValid)
             {
+                ViewBag.Carreras = _CarreraDatos.ListarCarrera();
                 return View();
             }
             bool respuesta = _UsuarioDatos.RegistrarAlumno(model);
@@ -36,6 +39,7 @@ namespace Cafeteria.Controllers
                 return RedirectToAction("ListarAlumno");
             } else
             {
+                ViewBag.Carreras = _CarreraDatos.ListarCarrera();
                 return View();
             }
         }

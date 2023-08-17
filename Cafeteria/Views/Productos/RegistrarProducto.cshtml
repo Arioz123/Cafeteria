@@ -1,15 +1,15 @@
-﻿@model Cafeteria.Models.InventarioModel;
+﻿@model Cafeteria.Models.ProductosModel;
 @{
-    ViewData["Title"] = "RegistrarInventario";
+    ViewData["Title"] = "RegistrarProducto";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="card col-8">
     <div class="card-header">
-        Crear Nuevo Inventario
+        Crear Nuevo Producto
     </div>
     <div class="card-body justify-content-center">
-        <form asp-action="RegistrarInventario" asp-controller="Inventario" method="post">
+        <form asp-action="RegistrarProducto" asp-controller="Productos" method="post">
             <div class="col-6">
                 <label for="staticEmail2" class="form-label">Id</label>
                 <input asp-for="Id" type="text" class="form-control" />
@@ -23,9 +23,9 @@
             </div>
 
             <div class="col-6">
-                <label for="staticEmail2" class="form-label">Cantidad</label>
-                <input asp-for="Cantidad" type="number" class="form-control" />
-                <span asp-validation-for="Cantidad" class="text-danger"></span>
+                <label for="staticEmail2" class="form-label">Descripcion</label>
+                <input asp-for="Descripcion" type="number" class="form-control" />
+                <span asp-validation-for="Descripcion" class="text-danger"></span>
             </div>
 
             <div class="col-6">
@@ -34,8 +34,8 @@
             </div>
 
             <div class="col-4">
-                <button type="submit" class="btn btn-primary">Crear Inventario</button>
-                <a asp-action="ListarInventario" asp-controller="Inventario" class="btn btn-warning">Volver a la lista</a>
+                <button type="submit" class="btn btn-primary">Crear Producto</button>
+                <a asp-action="ListarProducto" asp-controller="Productos" class="btn btn-warning">Volver a la lista</a>
             </div>
         </form>
     </div>
